@@ -1,34 +1,33 @@
 package ci.pigier.model;
 
-import javafx.beans.property.SimpleStringProperty;
 
 public class Note {
-	private final SimpleStringProperty title;
-	private final SimpleStringProperty description;
+	 private int id;
+	    private String title;
+	    private String description;
 
-	public Note(String title, String description) {
-		this.title = new SimpleStringProperty(title);
-		this.description = new SimpleStringProperty(description);
-	}
+	    // Getters et setters
+	    public int getId() {
+	        return id;
+	    }
 
-	public String getTitle() {
-		return title.get();
-	}
+	    public void setId(int id) {
+	        this.id = id;
+	    }
 
-	public void setTitle(String title) {
-		this.title.set(title);
-	}
+	    public String getTitle() {
+	        return title;
+	    }
 
-	public String getDescription() {
-		return description.get();
-	}
+	    public void setTitle(String title) {
+	        this.title = title;
+	    }
 
-	public void setDescription(String description) {
-		this.description.set(description);
-	}
-	
-    @Override
-    public String toString() {
-        return "Note{" + "title=" + title + ", description=" + description + '}';
-    }
+	    public String getDescription() {
+	        return description;
+	    }
+
+	    public void setDescription(String description) {
+	        this.description = description;
+	    }
 }

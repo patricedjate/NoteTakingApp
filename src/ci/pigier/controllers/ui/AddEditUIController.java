@@ -54,7 +54,7 @@ public class AddEditUIController extends BaseController implements Initializable
             return;
         }
 
-        data.add(new Note(titleTxtFld.getText(), descriptionTxtArea.getText()));
+        //data.add(new Note(titleTxtFld.getText(), descriptionTxtArea.getText()));
         navigate(event, FXMLPage.LIST.getPage());
     }
 

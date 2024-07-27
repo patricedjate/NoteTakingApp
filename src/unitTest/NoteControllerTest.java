@@ -25,6 +25,7 @@ public class NoteControllerTest {
 	    }
 
 	    @Test
+	//test unitaire créer une note en bd
 	    public void testCreateNote() {
 	        Note note = new Note();
 	        note.setTitle("Test Titre");
@@ -32,11 +33,13 @@ public class NoteControllerTest {
 	        assertNotNull(note);
 	    }
 	    @Test
+	//test unitaire connection bd
 	    public void testDatabaseConnection() throws SQLException {
 	        DatabaseConnection dbConnection = new DatabaseConnection();
 	        assertNotNull(DatabaseConnection.getConnection());
 	    }
 	    @Test
+	// test unitaire suuprimer les données en base
 	    public void clearDatabase() {
 	        try (Connection conn = DatabaseConnection.getConnection();
 	             PreparedStatement stmt = conn.prepareStatement("DELETE FROM note")) {

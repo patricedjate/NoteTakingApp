@@ -32,6 +32,7 @@ public class AddEditUIController extends BaseController implements Initializable
     private TextField titleTxtFld;
     private noteService NoteService = new noteService();
     @FXML
+	//revenir en arrière
     void doBack(ActionEvent event) throws IOException {
     	navigate(event, FXMLPage.LIST.getPage());
     }
@@ -50,6 +51,7 @@ public class AddEditUIController extends BaseController implements Initializable
         
     }
     @FXML
+	//effacer les champs
     void doClear(ActionEvent event) {
     	titleTxtFld.setText("");
     	descriptionTxtArea.setText("");
@@ -57,6 +59,7 @@ public class AddEditUIController extends BaseController implements Initializable
 
     @FXML
     void doSave(Event event) throws IOException {
+	    //boite de dialogue champ vide
     	  if (titleTxtFld.getText().trim().equals("")
                   || descriptionTxtArea.getText().trim().equals("")) {
           	alert = new Alert(AlertType.WARNING);
@@ -69,6 +72,7 @@ public class AddEditUIController extends BaseController implements Initializable
     	 Note note = new Note();
          note.setTitle(titleTxtFld.getText());
          note.setDescription(descriptionTxtArea.getText());
+	    //sauvegarder les données en base 
          noteService.addNote(note);
          navigate(event, FXMLPage.LIST.getPage());
         //data.add(new Note(titleTxtFld.getText(), descriptionTxtArea.getText()));

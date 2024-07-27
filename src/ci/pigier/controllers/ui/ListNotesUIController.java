@@ -39,6 +39,7 @@ public class ListNotesUIController extends BaseController implements Initializab
     void doDelete() {
     	Note selectedNote = notesListTable.getSelectionModel().getSelectedItem();
     	  if (selectedNote != null) {
+		  //supprimer les données en base
     		  NoteService.deleteNote(selectedNote);
     	        notesListTable.getItems().remove(selectedNote);
     	        notesCount.setText(NoteService.countNote()+" Notes");
@@ -64,6 +65,7 @@ public class ListNotesUIController extends BaseController implements Initializab
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		//recuperer les données en bd
 		notesListTable.setItems(NoteService.getNotes());
 		titleTc.setCellValueFactory(new PropertyValueFactory<>("title"));
 		descriptionTc.setCellValueFactory(new

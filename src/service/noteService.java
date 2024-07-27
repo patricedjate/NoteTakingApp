@@ -11,9 +11,9 @@ import ci.pigier.model.Note;
 import dbconnection.DatabaseConnection;
 public class noteService {
 
-	private ObservableList<Note> notes = FXCollections.observableArrayList();
+	private static ObservableList<Note> notes = FXCollections.observableArrayList();
 
-    public ObservableList<Note> getNotes() {
+    public static ObservableList<Note> getNotes() {
         notes.clear();
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement("SELECT * FROM note");
@@ -22,7 +22,7 @@ public class noteService {
             while (rs.next()) {
                 Note note = new Note();
                 note.setTitle(rs.getString("title"));
-                note.setDescription(rs.getString("content"));
+                note.setDescription(rs.getString("description"));
                 notes.add(note);
             }
         } catch (SQLException e) {
@@ -31,14 +31,12 @@ public class noteService {
         return notes;
     }
 
-    public void addNote(Note note) {
+    public static void addNote(Note note) {
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO note (title, content) VALUES (?, ?)")) {
-
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO note (title, description) VALUES (?, ?)")) {
             stmt.setString(1, note.getTitle());
             stmt.setString(2, note.getDescription());
             stmt.executeUpdate();
-            getNotes();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,7 +44,7 @@ public class noteService {
 
     public void updateNote(Note note) {
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("UPDATE note SET title = ?, content = ? WHERE id = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("UPDATE note SET title = ?, description = ? WHERE id = ?")) {
 
             stmt.setString(1, note.getTitle());
             stmt.setString(2, note.getDescription());
@@ -60,9 +58,9 @@ public class noteService {
 
     public void deleteNote(Note note) {
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("DELETE FROM note WHERE id = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM note WHERE title = ?")) {
 
-            stmt.setInt(1, note.getId());
+            stmt.setString(1, note.getTitle());
             stmt.executeUpdate();
             getNotes();
         } catch (SQLException e) {

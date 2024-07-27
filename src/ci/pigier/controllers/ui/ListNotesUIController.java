@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import service.noteService;
 
 public class ListNotesUIController extends BaseController implements Initializable {
 
@@ -35,8 +36,13 @@ public class ListNotesUIController extends BaseController implements Initializab
     private TableColumn<?, ?> titleTc;
 
     @FXML
-    void doDelete(ActionEvent event) {
-
+    void doDelete() {
+    	Note selectedNote = notesListTable.getSelectionModel().getSelectedItem();
+    	  if (selectedNote != null) {
+    		  NoteService.deleteNote(selectedNote);
+    	        notesListTable.getItems().remove(selectedNote);
+    	    }
+	       
     }
 
     @FXML
@@ -49,22 +55,20 @@ public class ListNotesUIController extends BaseController implements Initializab
     	editNote = null;
     	navigate(event, FXMLPage.ADD.getPage());
     }
+    private noteService NoteService = new noteService();
+
+
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		FilteredList<Note> filteredData = new FilteredList<>(data, n -> true);
-		notesListTable.setItems(filteredData);
+		// TODO Auto-generated method stub
+		notesListTable.setItems(NoteService.getNotes());
 		titleTc.setCellValueFactory(new PropertyValueFactory<>("title"));
 		descriptionTc.setCellValueFactory(new
 		PropertyValueFactory<>("description"));
-		searchNotes.setOnKeyReleased(e -> {
-			filteredData.setPredicate(n -> {
-				if (searchNotes.getText() == null || searchNotes.getText().isEmpty())
-					return true;
-				return n.getTitle().contains(searchNotes.getText())
-						|| n.getDescription().contains(searchNotes.getText());
-			});
-		});
+		//notesListTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showNoteDetails(newValue));
 	}
+	 
+	
 
 }

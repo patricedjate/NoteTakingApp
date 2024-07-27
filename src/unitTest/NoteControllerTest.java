@@ -36,6 +36,15 @@ public class NoteControllerTest {
 	        DatabaseConnection dbConnection = new DatabaseConnection();
 	        assertNotNull(DatabaseConnection.getConnection());
 	    }
+	    @Test
+	    public void clearDatabase() {
+	        try (Connection conn = DatabaseConnection.getConnection();
+	             PreparedStatement stmt = conn.prepareStatement("DELETE FROM note")) {
+	            stmt.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	
 	  
 }

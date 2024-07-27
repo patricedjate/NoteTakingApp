@@ -41,13 +41,15 @@ public class ListNotesUIController extends BaseController implements Initializab
     	  if (selectedNote != null) {
     		  NoteService.deleteNote(selectedNote);
     	        notesListTable.getItems().remove(selectedNote);
+    	        notesCount.setText(NoteService.countNote()+" Notes");
     	    }
 	       
     }
 
     @FXML
-    void doEdit(ActionEvent event) {
-
+    void doEdit(ActionEvent event) throws IOException {
+    	Note selectedNote = notesListTable.getSelectionModel().getSelectedItem();
+    	navigate(event, FXMLPage.EDIT.getPage());
     }
 
     @FXML
@@ -66,6 +68,8 @@ public class ListNotesUIController extends BaseController implements Initializab
 		titleTc.setCellValueFactory(new PropertyValueFactory<>("title"));
 		descriptionTc.setCellValueFactory(new
 		PropertyValueFactory<>("description"));
+		notesCount.setText(NoteService.countNote()+" Notes");
+		
 		//notesListTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showNoteDetails(newValue));
 	}
 	 

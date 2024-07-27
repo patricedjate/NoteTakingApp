@@ -67,4 +67,18 @@ public class noteService {
             e.printStackTrace();
         }
     }
+    public int countNote() {
+    	int nbre = 0;
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM note");
+        	ResultSet rs = stmt.executeQuery()) {
+        	if (rs.next()) {
+        		int nbreElement = rs.getInt(1);
+        		nbre = nbreElement;
+        	}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nbre;
+    }
 }

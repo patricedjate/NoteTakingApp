@@ -57,6 +57,15 @@ public class AddEditUIController extends BaseController implements Initializable
 
     @FXML
     void doSave(Event event) throws IOException {
+    	  if (titleTxtFld.getText().trim().equals("")
+                  || descriptionTxtArea.getText().trim().equals("")) {
+          	alert = new Alert(AlertType.WARNING);
+              alert.setTitle("Boîte de dialogue d'avertissement");
+              alert.setHeaderText("Données invalides à enregistrer");
+              alert.setContentText("Le titre ou la description de la note ne peut pas être vide !");
+              alert.showAndWait();
+              return;
+          }
     	 Note note = new Note();
          note.setTitle(titleTxtFld.getText());
          note.setDescription(descriptionTxtArea.getText());
